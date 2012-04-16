@@ -22,38 +22,28 @@ public class EmendaAntFile {
 	public static void main(String[] args) {
 		try {
 			System.out.println("Iniciando criação do build...");
-			Process saida = Runtime.getRuntime().exec("git_diff.bat " + versaoCliente + " " + versaoAtualizada + " " + repositorioDasVersoes);
-	        BufferedReader buffer = new BufferedReader(new InputStreamReader(saida.getInputStream()));
-	        
-	        getModificacoes(buffer);
+	        getModificacoes();
 	        
 	        montaCopy();
 	        montaDelete();
 			
 	        gerarFileAtualizador();
-	        
 	        System.out.println("Build criado!");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}  
 	}
 
-	private static void getModificacoes(BufferedReader buf) throws IOException 
+	private static void getModificacoes() throws IOException 
 	{
 		String comando = "";
 		String filePath = "";
-		String linha = "";
-		boolean capturaComandos = false;
+		String linha;
+		BufferedReader fileDiff = new BufferedReader(new FileReader("diff_"+ versaoCliente +"_"+ versaoAtualizada +".txt"));
 		
-		while((linha = buf.readLine()) != null) 
+		while((linha = fileDiff.readLine()) != null)
 		{
-			if(linha.contains("git diff"))
-			{
-				capturaComandos = true;
-				continue;
-			}
-			
-			if(capturaComandos)
+			if(!linha.equals(""))
 			{
 				String[] comandoAndFile = linha.split("	");
 				comando = comandoAndFile[0];
@@ -65,7 +55,9 @@ public class EmendaAntFile {
 				if(comando.equals("D"))
 					deletados.add(filePath);
 			}
-		}
+	    }
+		fileDiff.close();
+
 	}
 
 	private static void montaCopy() 

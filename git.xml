@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="FortesRH_test_cp" basedir="." default="diff">
+	
+	<property name="destino" value="C://Users//Barroso//Desktop//TesteDeploy//novosFiles"/>
+	<property name="origem" value="C://repositorio//fortesrhwar"/>
+	<property name="versaoCliente" value="v1"/>
+	<property name="versaoAtualizada" value="v3"/>
+	
+		
+	<target name="diff">
+		<exec dir="${origem}" failifexecutionfails="true" failonerror="true"
+			executable="git"
+			output="diff_${versaoCliente}_${versaoAtualizada}.txt">
+			<arg value="diff" />
+			<arg value="${versaoCliente}" />
+			<arg value="${versaoAtualizada}" />
+			<arg value="--name-status" />
+		</exec>
+	</target>
+</project>
