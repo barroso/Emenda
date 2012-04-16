@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="FortesRH_test_cp" basedir=".." default="cp">
+	
+	<property name="destino" value="C://Users//Barroso//Desktop//TesteDeploy//novosFiles"/>
+	<property name="origem" value="C://repositorio//fortesrhwar"/>
+	
+	<target name="cp">
+//COPY_INCLUDE
+	</target>
+	
+	<target name="del">
+//COPY_DEL
+	</target>
+</project>
