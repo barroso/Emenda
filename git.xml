@@ -3,8 +3,6 @@
 	
 	<property name="destino" value="C://Users//Barroso//Desktop//TesteDeploy//novosFiles"/>
 	<property name="origem" value="C://repositorio//fortesrhwar"/>
-	<property name="versaoCliente" value="v1"/>
-	<property name="versaoAtualizada" value="v3"/>
 	
 		
 	<target name="diff">

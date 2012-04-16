@@ -24,7 +24,6 @@ public class EmendaAntFile {
 	public static void main(String[] args) {
 		try {
 			System.out.println("Iniciando criação do build...");
-			
 
 			executeDiff();
 			
@@ -34,6 +33,7 @@ public class EmendaAntFile {
 	        montaDelete();
 			
 	        gerarFileAtualizador();
+	        
 	        System.out.println("Build criado!");
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -45,6 +45,10 @@ public class EmendaAntFile {
 		File buildFile = new File("git.xml");
 		Project project = new Project();
 		project.setUserProperty("ant.file", buildFile.getAbsolutePath());
+		
+		project.setProperty("versaoCliente", versaoCliente);
+		project.setProperty("versaoAtualizada", versaoAtualizada);
+		
 		project.fireBuildStarted();
 		project.init();
 		ProjectHelper helper = ProjectHelper.getProjectHelper();
