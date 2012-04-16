@@ -1,15 +1,17 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collection;
+
+import org.apache.tools.ant.Project;
+import org.apache.tools.ant.ProjectHelper;
 
 
 public class EmendaAntFile {
 	
-	private static String repositorioDasVersoes = "C:\\repositorio\\fortesrhwar";
 	private static String versaoCliente = "v1";
 	private static String versaoAtualizada = "v3";
 	private static String template = "TemplateAntCopyDel.xml";
@@ -22,6 +24,10 @@ public class EmendaAntFile {
 	public static void main(String[] args) {
 		try {
 			System.out.println("Iniciando criação do build...");
+			
+
+			executeDiff();
+			
 	        getModificacoes();
 	        
 	        montaCopy();
@@ -32,6 +38,19 @@ public class EmendaAntFile {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}  
+	}
+
+	private static void executeDiff()
+	{
+		File buildFile = new File("git.xml");
+		Project project = new Project();
+		project.setUserProperty("ant.file", buildFile.getAbsolutePath());
+		project.fireBuildStarted();
+		project.init();
+		ProjectHelper helper = ProjectHelper.getProjectHelper();
+		project.addReference("ant.projectHelper", helper);
+		helper.parse(project, buildFile);
+		project.executeTarget(project.getDefaultTarget());
 	}
 
 	private static void getModificacoes() throws IOException 
@@ -56,8 +75,8 @@ public class EmendaAntFile {
 					deletados.add(filePath);
 			}
 	    }
+		
 		fileDiff.close();
-
 	}
 
 	private static void montaCopy() 
